@@ -7,7 +7,7 @@ const SelectCountry = (props) => {
 
   if(loaded) {
     return (
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12}>
         <Skeleton variant="rounded" height={60}/>
       </Grid>
     )
@@ -28,6 +28,9 @@ const SelectCountry = (props) => {
         disableClearable
         onChange={(event, newValue) => {
           setValue(newValue);
+        }}
+        onKeyDown={(event) => {
+          event.preventDefault();
         }}
         options={dataCountries}
         renderInput={(params) => <TextField {...params} label={label} />}

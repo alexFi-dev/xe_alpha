@@ -1,12 +1,20 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid, Typography, Button } from '@mui/material'
 import axios from 'axios'
+import { useTelegram } from './hooks/useTelegram'
 import { useContext, useEffect, useState } from 'react'
 import InputAmount from './components/InputAmount'
 import SelectCountry from './components/SelectCountry'
 import SwitchCurrency from './components/SwitchCurrency'
 import { CurrencyContext } from './context/CurrencyContext'
 
-function App() {
+function App(props) {
+
+  const {tg, onToggleButton} = useTelegram();
+
+  useEffect( () => {
+    tg.ready()
+  }, [])
+  
   const {
     fromCurrency,
     setFromCurrency,
@@ -47,6 +55,9 @@ function App() {
   return (
     <Container maxWidth="md" sx={boxStyles}>
       <Typography variant='h6' sx={{margin: "20px 0"}}>Exchange bot. Alpha v.0.1</Typography>
+      <span className={'username'}>
+          {tg.user?.username}
+      </span>
       <Grid container spacing={2}>
         <InputAmount />
         <SelectCountry value={fromCurrency} setValue={setFromCurrency} label="From" />
@@ -59,6 +70,7 @@ function App() {
           <Typography variant='h5' sx={{ marginTop: "5px", fontWeight: "bold"}}> {Math.round(resultCurrency*firstAmount * 100) / 100} {toCurrency} </Typography>
         </Box>
       ) : ""}
+      <Button sx={{ marginTop: "30px"}} onClick={onToggleButton}>go-go TG!</Button>
     </Container>
   )
 }
