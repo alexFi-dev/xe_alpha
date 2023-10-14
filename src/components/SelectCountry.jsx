@@ -24,10 +24,10 @@ const SelectCountry = (props) => {
   return (
     <Grid item xs={12} md={3}>
       <Autocomplete
+        readOnly
         value={value}
         disableClearable
-        onChange={(event, newValue) => {
-          event.preventDefault();
+        onChange={(newValue) => {
           setValue(newValue);
         }}
         options={dataCountries}
